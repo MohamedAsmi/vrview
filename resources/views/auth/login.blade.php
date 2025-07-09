@@ -1,14 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+
+<!-- Particles Background -->
+<div id="particles-js" style="position: fixed; width: 100%; height: 100%; z-index: 0;"></div>
+
+<!-- Page Content -->
+<div class="container position-relative" style="z-index: 1;">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+            <div class="card glass-card text-black mt-4">
+                <div class="card-header bg-transparent border-bottom border-secondary fw-bold fs-4">
+                    {{ __('Register') }}
+                </div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                  <form method="POST" action="{{ route('login') }}">
                         @csrf
 
                         <div class="row mb-3">
@@ -53,12 +60,12 @@
 
                         <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-success">
                                     {{ __('Login') }}
                                 </button>
 
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    <a class="btn btn-link text-black" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
@@ -70,4 +77,13 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+<style>
+  
+</style>
+
 @endsection

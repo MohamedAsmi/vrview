@@ -1,0 +1,11 @@
+  body {
+        background-color: #005555;
+        font-family: 'Orbitron', sans-serif;
+    }
+
+    .glass-card {
+        background: #005555;
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
