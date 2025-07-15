@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserRequest;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Auth\Events\Registered;
 class RegisterController extends Controller
 {
     /*
@@ -69,5 +70,28 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    public function register(StoreUserRequest $request)
+    {
+
+        $nicFrontPath = $request->file('nic_front')->store('nic_files/front', 'public');
+        $nicBackPath = $request->file('nic_back')->store('nic_files/back', 'public');
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'address' => $request->address,
+            'mobile' => $request->mobile,
+            'type' => $request->type,
+            'nic_front' => $nicFrontPath,
+            'nic_back' => $nicBackPath,
+        ]);
+
+        event(new Registered($user));
+        auth()->login($user);
+
+        return redirect()->route('verification.notice');
     }
 }
