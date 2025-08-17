@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\BaseController;
 use App\Http\Controllers\ChallansController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,15 +19,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home.index');
 });
 
 Auth::routes(['verify' => true]);
 
 Route::middleware(['auth','is-admin'])->group(function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::resource('challance', ChallansController::class);
-    Route::get('challans/list', [ChallansController::class,'list'])->name('challans.list');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::resource('/users', UserController::class);
+    
 
 });
 
