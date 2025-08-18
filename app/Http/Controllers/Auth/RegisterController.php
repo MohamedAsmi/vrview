@@ -87,6 +87,8 @@ class RegisterController extends Controller
             'type' => $request->type,
             'nic_front' => $nicFrontPath,
             'nic_back' => $nicBackPath,
+            'is_admin' => $request->type == User::ROLE_AGENT ? User::ROLE_AGENT : User::ROLE_USER,
+            'status' => $request->type == User::ROLE_USER ? User::IS_ACTIVE : User::IS_INACTIVE,
         ]);
 
         event(new Registered($user));

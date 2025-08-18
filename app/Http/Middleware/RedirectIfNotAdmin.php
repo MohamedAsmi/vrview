@@ -2,12 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class IsAdmin
+class RedirectIfNotAdmin
 {
     /**
      * Handle an incoming request.
@@ -16,10 +15,13 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->is_admin === 2) {
-            return $next($request);
+        if (auth()->check()) {
+            if (auth()->user()->is_admin) {
+                return redirect()->route('admin.home');
+            } else {
+                return redirect()->route('user.home');
+            }
         }
-
-        return redirect('/')->with('error', "You don't have admin access.");
+        return $next($request);
     }
 }

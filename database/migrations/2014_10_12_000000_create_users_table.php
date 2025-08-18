@@ -20,9 +20,10 @@ return new class extends Migration
             $table->boolean('is_admin')->default(0);
             $table->string('nic_front')->nullable();
             $table->string('nic_back')->nullable();
-               $table->string('address')->nullable();
+            $table->string('address')->nullable();
             $table->string('mobile')->nullable();
             $table->tinyInteger('type')->default(1); // 1 = User, 2 = Agent
+            $table->Integer('status')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

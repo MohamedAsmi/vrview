@@ -13,14 +13,19 @@ use App\Notifications\CustomVerifyEmail;
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
+    const ROLE_USER  = 0;  
+    const ROLE_AGENT  = 1;  
+    const ROLE_ADMIN = 2;
 
+    const IS_ACTIVE = 1;
+    const IS_INACTIVE = 0;
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'email', 'password', 'address', 'mobile', 'type','nic_front', 'nic_back',
+        'name', 'email', 'password', 'address', 'mobile', 'type','nic_front', 'nic_back','is_admin', 'status'
     ];
 
     /**
@@ -43,8 +48,16 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
-    public function sendEmailVerificationNotification()
+  
+    public function getRoleLabel(): string
     {
-        $this->notify(new CustomVerifyEmail);
+        return $this->is_admin ? 'Admin' : 'User';
     }
+
+    public function isAdmin(): bool
+    {
+        return $this->is_admin === self::ROLE_ADMIN;
+    }
+
+  
 }

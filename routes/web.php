@@ -24,10 +24,24 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::middleware(['auth','is-admin'])->group(function () {
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::resource('/users', UserController::class);
-    
+// Custom email verification route
+Route::get('/email/verify/{id}/{hash}', [App\Http\Controllers\Auth\VerificationController::class, '__invoke'])
+    ->middleware(['auth', 'signed'])
+    ->name('verification.verify');
 
+Route::prefix('admin')->middleware(['auth', 'is-admin',])->group(function () {
+    Route::get('home', [HomeController::class, 'index'])->name('admin.home');
+    Route::resource('users', UserController::class);
+    Route::get('list/users', [ UserController::class, 'list'])->name('list.users');
 });
 
+Route::prefix('agent')->middleware(['auth', 'is-agent'])->group(function () {
+    Route::get('home', [HomeController::class, 'index'])->name('agent.home');
+});
+
+Route::prefix('user')->middleware(['auth', 'is-user'])->group(function () {
+    Route::get('home', [HomeController::class, 'index'])->name('user.home');
+    // Route::resource('users', UserController::class);
+    // Route::get('list/users', [ UserController::class, 'list'])->name('list.users');
+
+});

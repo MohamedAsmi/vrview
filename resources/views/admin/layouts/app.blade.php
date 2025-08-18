@@ -21,6 +21,8 @@
 		</div>
 	</div>
 	<!-- js -->
+	
+	@include('admin.layouts.model')
 	@include('admin.layouts.script')
 	@stack('js')
 </body>

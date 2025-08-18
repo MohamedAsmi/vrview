@@ -30,6 +30,7 @@ class StoreUserRequest extends FormRequest
             'type'     => 'required|in:1,2',
             'nic_front' => 'required|file|mimes:jpeg,png,pdf|max:2048',
             'nic_back' => 'required|file|mimes:jpeg,png,pdf|max:2048',
+            'type' => 'required',
         ];
     }
 }

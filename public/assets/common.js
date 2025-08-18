@@ -61,7 +61,7 @@ $("button[data-dismiss=modal]").click(function()
 $(document).on('submit', 'form', function () {
     let btn = $(this).find('button[type=submit]');
     let loadingText = btn.attr('data-loading-text');
-    loadButton(btn, loadingText);
+    // loadButton(btn, loadingText);
 });
 
 $(document).on('click', '.load-modal', function () {
@@ -86,6 +86,7 @@ $(document).on('shown.bs.modal', '.modal', function () {
 
 function initDataTable(table, columns, formId, aaSorting = [], columnDefs = [], pageLength = 5, lengthMenu = [[5, 50, 100, 500, 1000, -1], [5, 50, 100, 500, 1000, 'All']]) {
     let url = table.attr('data-url');
+
 
     // Custom filtering function which will search data in column four between two values
     $.fn.dataTable.ext.search.push(
@@ -122,7 +123,7 @@ function initDataTable(table, columns, formId, aaSorting = [], columnDefs = [], 
             lengthMenu: lengthMenu,
             aaSorting: aaSorting,
             columns: columns,
-            responsive: true,
+            // responsive: true,
             language: {
                 searchPlaceholder: 'Search...',
                 sSearch: '',
@@ -164,22 +165,22 @@ function initDataTable(table, columns, formId, aaSorting = [], columnDefs = [], 
             ]
         });
 
-        minDate = new DateTime($('#min'), {
-            format: 'MMMM Do YYYY'
-        });
-        maxDate = new DateTime($('#max'), {
-            format: 'MMMM Do YYYY'
-        });
+        // minDate = new DateTime($('#min'), {
+        //     format: 'MMMM Do YYYY'
+        // });
+        // maxDate = new DateTime($('#max'), {
+        //     format: 'MMMM Do YYYY'
+        // });
 
-        $('#min, #max').on('change', function () {
-            t.draw();
-        });
-        $('#batch').on('change', function () {
-            t.draw();
-        });
-        $('#programme').on('change', function () {
-            t.draw();
-        });
+        // $('#min, #max').on('change', function () {
+        //     t.draw();
+        // });
+        // $('#batch').on('change', function () {
+        //     t.draw();
+        // });
+        // $('#programme').on('change', function () {
+        //     t.draw();
+        // });
    
         resolve(t);
     });
