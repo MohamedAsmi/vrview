@@ -1,0 +1,20 @@
+
+.fa-spinner-third{
+    font-size: 13mm;
+    padding: 47px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    color: #0681E1;
+}
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.active{
+   outline: 2px #007bff solid;
+}

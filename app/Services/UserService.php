@@ -21,7 +21,7 @@ class UserService
         try {
             $users = $this->userRepository->getAll();
 
-            return DataTables::of($users)   // or ->eloquent() if $users is an Eloquent query
+            return DataTables::of($users)
                 ->addIndexColumn()
                 ->addColumn('role', fn ($user) => $user->getRoleLabel())
                 ->addColumn('nic_images', function ($user) {

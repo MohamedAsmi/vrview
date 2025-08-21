@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\BaseController;
-use App\Http\Controllers\ChallansController;
+use App\Http\Controllers\Agent\AgentHomeController;
+use App\Http\Controllers\Agent\AgentPropertyController;
+use App\Http\Controllers\Agent\AgentPropertyImageController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,30 @@ Route::get('/', function () {
     return view('home.index');
 });
 
+Route::get('/test', function () {
+   
+        $default=["firstScene"=>1,"autoLoad"=>true,"orientationOnByDefault"=>true,"showControls"=>false,"autoRotate"=>2];
+
+        $scenes =["1"=>["title"=>"","panorama"=>"assets/images/noimage.png"]];
+ $propety_details = [
+            'company_name' => 'asdasd',
+            'price' => 'asdasdsa',
+            'address1' => 'sdasdasd',
+            'postcode_full' => 'asdadasd'
+        ];
+    return view('agent.properties.update', [
+    'json' => json_encode($scenes),
+    'default' => json_encode($default),
+    'token' => 'sdsafsdfsdf',
+    'decrtoken' => 'safdasf',
+    'propid' => 1,
+    'propety_details' => $propety_details,
+    'full_address' => 'fsdfsdfsdfds',
+    'onoffstatus' => 1
+]);
+});
+Route::post('/getallImage', [AgentPropertyController::class, 'getallImage'])->name('Image.get');
+
 Auth::routes(['verify' => true]);
 
 // Custom email verification route
@@ -36,7 +61,13 @@ Route::prefix('admin')->middleware(['auth', 'is-admin',])->group(function () {
 });
 
 Route::prefix('agent')->middleware(['auth', 'is-agent'])->group(function () {
-    Route::get('home', [HomeController::class, 'index'])->name('agent.home');
+    Route::get('home', [AgentHomeController::class, 'index'])->name('agent.home');
+    Route::resource('property', AgentPropertyController::class);
+    Route::post('store/property/{property}', [AgentPropertyController::class, 'update'])->name('property.update');
+    Route::resource('property-image', AgentPropertyImageController::class);
+    Route::get('list/property', [AgentPropertyController::class, 'list'])->name('list.properties');
+
+
 });
 
 Route::prefix('user')->middleware(['auth', 'is-user'])->group(function () {

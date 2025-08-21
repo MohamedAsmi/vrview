@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Repositories\Interfaces\PropertImageRepositoryInterface;
+use App\Repositories\Interfaces\PropertRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Repositories\PropertyImageRepository;
+use App\Repositories\PropertyRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,7 +19,11 @@ class AppServiceProvider extends ServiceProvider
     {
          $this->app->bind(
             UserRepositoryInterface::class, 
-            UserRepository::class
+            UserRepository::class,
+            PropertRepositoryInterface::class, 
+            PropertyRepository::class,
+            PropertImageRepositoryInterface::class, 
+            PropertyImageRepository::class
         );
     }
 

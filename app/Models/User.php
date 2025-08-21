@@ -51,7 +51,15 @@ class User extends Authenticatable implements MustVerifyEmail
   
     public function getRoleLabel(): string
     {
-        return $this->is_admin ? 'Admin' : 'User';
+        if ($this->is_admin == self::ROLE_ADMIN) {
+            return 'Admin';
+        } elseif ($this->is_admin == self::ROLE_AGENT) {
+            return 'Agent';
+        } elseif ($this->is_admin == self::ROLE_USER) {
+            return 'User';
+        }
+        
+        return 'Unknown';
     }
 
     public function isAdmin(): bool

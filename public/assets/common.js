@@ -10,6 +10,7 @@ $(document).on('submit', '#ajax-form', async function (e) {
     let notification = $(this).attr('data-notification');
     let file = $(this).attr('data-file');
     let reload = $(this).attr('data-reload');
+    let redirect = $(this).attr('data-redirect');
 
 
     
@@ -25,6 +26,7 @@ $(document).on('submit', '#ajax-form', async function (e) {
     $('div#message-area').html('');
     try {
         let response = await doAjaxPost(url, method, data, file);
+console.log(response);
 
         let formModal = $(this).closest('.modal')
         if (formModal.length != 0) {
@@ -39,7 +41,9 @@ $(document).on('submit', '#ajax-form', async function (e) {
         }
         if (reload == 'true') {
             window.location.reload();
-        } 
+        }else if (redirect == 'true') {
+            window.location.href = response.redirect_url;
+        }
         $('table#' + table).DataTable().ajax.reload();
         resetButton(btn, originalText);
     } catch (err) {

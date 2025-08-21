@@ -8,13 +8,13 @@
     @include('home.layouts.hero')
    
 
-    {{-- @include('home.layouts.property');
+    {{-- @include('home.layouts.property')
    
-    @include('home.layouts.features');
-    @include('home.layouts.testimonial');
-    @include('home.layouts.intro');
-    @include('home.layouts.agent');
-    @include('home.layouts.footer'); --}}
+    @include('home.layouts.features')
+    @include('home.layouts.testimonial')
+    @include('home.layouts.intro')
+    @include('home.layouts.agent')
+    @include('home.layouts.footer') --}}
 
 
 
