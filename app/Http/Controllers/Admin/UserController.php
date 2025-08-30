@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BaseController;
+use App\Http\Requests\StoreUserRequest;
+use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
 class UserController extends BaseController
 {
     /**
@@ -32,15 +35,37 @@ class UserController extends BaseController
      */
     public function create()
     {
-        //
+        return view('admin.users.model.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        //
+        $nicFrontPath = $request->file('nic_front')->store('nic_files/front', 'public');
+        $nicBackPath = $request->file('nic_back')->store('nic_files/back', 'public');
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'address' => $request->address,
+            'mobile' => $request->mobile,
+            'type' => $request->type,
+            'nic_front' => $nicFrontPath,
+            'nic_back' => $nicBackPath,
+            'is_admin' => $request->type == User::ROLE_AGENT ? User::ROLE_AGENT : User::ROLE_USER,
+            // 'status' => $request->type == User::ROLE_USER ? User::IS_ACTIVE : User::IS_INACTIVE,
+            'status' => $request->type == User::IS_ACTIVE,
+        ]);
+
+        event(new Registered($user));
+        return response()->json([
+            'success' => true,
+            'message' => 'User Created successfully',
+            'user' => $user
+        ]);
     }
 
     /**
@@ -59,7 +84,7 @@ class UserController extends BaseController
     public function edit(string $id)
     {
         $user = $this->userService->getUserById($id);
-        return view('admin.users.model.show', [
+        return view('admin.users.model.edit', [
             'user' => $user
         ]);
     }
@@ -69,7 +94,13 @@ class UserController extends BaseController
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = $this->userService->updateUser($request, $id);
+      
+        return response()->json([
+            'success' => true,
+            'message' => 'User updated successfully',
+            'user' => $user
+        ]);
     }
 
     /**
@@ -77,6 +108,10 @@ class UserController extends BaseController
      */
     public function destroy(string $id)
     {
-        //
+        $user = $this->userService->deleteUser($id);
+        return response()->json([
+            'success' => $user,
+            'message' => 'User deleted successfully'
+        ]);
     }
 }

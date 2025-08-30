@@ -81,5 +81,34 @@ class UserService
         }
     }
     
+    public function updateUser($request, $id)
+    {
+        try {
+            $user = $this->userRepository->findById($id);
+            if (!$user) {
+                return $this->respondNotFound('User not found', 404);
+            }
+            $data = $request->only(['name', 'email', 'address', 'mobile', 'type', 'is_admin', 'status']);
+            $user->update($data);
+            return $user;
+        } catch (\Exception $e) {
+            Log::error('Error updating user: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to update user'], 500);
+        }
+    }
 
+    public function deleteUser($id)
+    {
+        try {
+            $user = $this->userRepository->findById($id);
+            if (!$user) {
+                return $this->respondNotFound('User not found', 404);
+            }
+            $user->delete();
+            return true;
+        } catch (\Exception $e) {
+            Log::error('Error deleting user: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to delete user'], 500);
+        }
+    }
 }

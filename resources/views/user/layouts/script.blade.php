@@ -6,7 +6,6 @@
 <script src="{{asset('assets/src/plugins/datatables/js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('assets/src/plugins/datatables/js/dataTables.responsive.min.js')}}"></script>
 <script src="{{asset('assets/src/plugins/datatables/js/responsive.bootstrap4.min.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="{{asset('assets/common.js')}}"></script>
      <script type="text/javascript" src="{{asset('assets/js/libpannellum.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/js/pannellum.js')}}"></script>

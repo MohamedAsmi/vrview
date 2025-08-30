@@ -45,7 +45,7 @@ $(document).ready( function () {
 
 $(document).on('click', '.delete', function () {
     $('#delete-modal .modal-title').html('Delete Confirmation');
-    $('#delete-modal #ajax-form').attr('method', 'GET');
+    $('#delete-modal #ajax-form').attr('method', 'DELETE');
     $('#delete-modal #ajax-form').attr('action', $(this).attr('data-url'));
     $('#delete-modal #ajax-form').attr('data-table', 'users_table');
     let modal = new bootstrap.Modal(document.getElementById('delete-modal'));
