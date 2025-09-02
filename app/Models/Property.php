@@ -20,6 +20,6 @@ class Property extends Model
 
     public function images()
     {
-        return $this->hasMany(PropertyImage::class, 'property_id');
+        return $this->hasMany(PropertyImage::class, 'property_id')->orderBy('order_id');;
     }
 }

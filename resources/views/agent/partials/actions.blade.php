@@ -10,10 +10,16 @@
 
     {{-- Edit --}}
     <a class="load-modal btn btn-sm btn-warning"
-       href="javascript:void(0)"
+         href="javascript:void(0)"
        data-url="{{ $editRoute }}"
        title="Edit">
         <i class="fa fa-edit"></i>
+    </a>
+
+    <a class="load-modal btn btn-sm btn-warning"
+       href="{{ $editRouteImage }}"
+       title="Edit">
+        <i class="fa fa-image"></i>
     </a>
 
     {{-- Delete --}}

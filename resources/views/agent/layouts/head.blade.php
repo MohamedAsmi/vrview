@@ -11,18 +11,19 @@
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/src/plugins/datatables/css/dataTables.bootstrap4.min.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/src/plugins/datatables/css/responsive.bootstrap4.min.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{asset('assets/vendors/styles/style.css')}}">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ant-design-icons/4.7.0/index.css" />
+	{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ant-design-icons/4.7.0/index.css" /> --}}
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum/build/pannellum.css" />
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
 	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css'>
 	<script src="https://kit.fontawesome.com/c2af6e26fd.js" crossorigin="anonymous"></script>
-    <link href="{{asset('assets/css/custom.css?v=3.4.2')}}" rel="stylesheet"/>
+    <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet"/>
 	<link rel="stylesheet" href="{{ asset('assets/css/active.css') }}">
 
-
+	<meta name="csrf-token" content="{{ csrf_token() }}">
+	<meta name="base_url" content="{{ url('/') }}">
 
 
 	

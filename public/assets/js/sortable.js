@@ -1,4 +1,6 @@
-    $( document ).ready(function() {
+$( document ).ready(function() {
+    let droproute = window.appRoutes.droproute;
+
     $("#room").sortable({
         start: function(event, ui) {
             var start_pos = ui.item.index();
@@ -11,9 +13,10 @@
             $.ajax({
                 data:{
                         dataId: values,
+                         _token: $('meta[name="csrf-token"]').attr('content')
                     },
                 type: 'POST',
-                url: "dropzone/upload",
+                url: droproute,
                 success: function(response) {
                 
                 }

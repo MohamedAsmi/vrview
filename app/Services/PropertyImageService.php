@@ -40,34 +40,19 @@ class PropertyImageService
     public function storePropertyImage($request)
     {
         try {
-            if (!$request->hasFile('files')) {
-                return response()->json(['error' => 'No files uploaded'], 400);
-            }
-
-            $result = $this->imageService->store($request, 'files', 'uploads');
-            
-            // Check if the result is an error response
-            if ($result instanceof \Illuminate\Http\JsonResponse) {
-                return $result;
-            }
-            
-            // If it's a successful response with image paths
-            if (is_array($result)) {
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Images uploaded successfully',
-                    'paths' => $result
-                ]);
-            }
-            
-            // If we get here, something unexpected happened
-            return response()->json(['error' => 'Unexpected response from image service'], 500);
-            
+            $image_paths = $this->imageService->store($request,'files','uploads');
+            // foreach ($image_paths as $image_path) {
+            //     $data = $request->all();
+            //     $data['image_path'] = $image_path;
+            //     $property = $this->propertyImageRepository->store($data);
+            // }
+         
+            return $image_paths;
         } catch (\Exception $e) {
-            Log::error('Error storing property images: ' . $e->getMessage());
+            Log::error('Error storing property: ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 500);
         }
-    }
+    }   
 
     public function getPropertyById(int $id)
     {

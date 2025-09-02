@@ -23,29 +23,13 @@ Route::get('/', function () {
     return view('home.index');
 });
 
-Route::get('/test', function () {
-   
-        $default=["firstScene"=>1,"autoLoad"=>true,"orientationOnByDefault"=>true,"showControls"=>false,"autoRotate"=>2];
 
-        $scenes =["1"=>["title"=>"","panorama"=>"assets/images/noimage.png"]];
- $propety_details = [
-            'company_name' => 'asdasd',
-            'price' => 'asdasdsa',
-            'address1' => 'sdasdasd',
-            'postcode_full' => 'asdadasd'
-        ];
-    return view('agent.properties.update', [
-    'json' => json_encode($scenes),
-    'default' => json_encode($default),
-    'token' => 'sdsafsdfsdf',
-    'decrtoken' => 'safdasf',
-    'propid' => 1,
-    'propety_details' => $propety_details,
-    'full_address' => 'fsdfsdfsdfds',
-    'onoffstatus' => 1
-]);
-});
-Route::post('/getallImage', [AgentPropertyController::class, 'getallImage'])->name('Image.get');
+Route::post('getallImage', [AgentPropertyController::class, 'getallImage'])->name('Image.get');
+Route::get('getimage/{property}',[AgentPropertyController::class, 'ajaxRequestPost'])->name('getimage');
+Route::post('dropzone/upload', [AgentPropertyController::class, 'udateorder'])->name('dropzone.upload');
+Route::post('getaudio', [AgentPropertyController::class, 'getaudio'])->name('getaudio.post');
+
+
 
 Auth::routes(['verify' => true]);
 
@@ -64,8 +48,9 @@ Route::prefix('agent')->middleware(['auth', 'is-agent'])->group(function () {
     Route::get('home', [AgentHomeController::class, 'index'])->name('agent.home');
     Route::resource('property', AgentPropertyController::class);
     Route::post('store/property/{property}', [AgentPropertyController::class, 'update'])->name('property.update');
-    Route::resource('property-image', AgentPropertyImageController::class);
+    // Route::resource('property-image/{property}', AgentPropertyImageController::class);
     Route::get('list/property', [AgentPropertyController::class, 'list'])->name('list.properties');
+    
 
 
 });

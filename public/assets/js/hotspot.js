@@ -42,29 +42,31 @@ $(document).on('submit', '#addhotspotpost', function(e) {
 
 $(document).on('click', '.addhotspot', function(e) {
     $(this).prop("disabled",true);
-    $('.imagerow').append('<div id="draggable" class="ui-widget-content modala"style="top: 61mm;left: 71mm;position: absolute;bottom: 0;z-index: 2;cursor: pointer;"><div id="dragdrop" class="ui-widget-content "style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);"><i class="fas fa-circle"style="color: #0084FF;"></i></div><div class="hover"></div><div class="fiststep" style="background: white;width: 268px;height: 46px;margin-left: 80px;margin-top: 4px;border-radius: .25rem;"><span style="font-weight: 700; margin-left: 29px;color: #555766;position: relative;top: 10px;">Please reposition hotspot</span></div><div class="card secondstep" style="height: 47mm;"><div class="card-body"><span style="font-weight: 600;">Link to</span><div class="dragging-option" style="diplay:none"><p>Please reposition hotspot</p></div><form id="addhotspotpost" enctype="multipart/form-data" class="is-readonly"><div class="dragging"><select class="form-control" name="sceneId" id="imageselect"></select><br><div class="pichandyaw"></div><div class="submithotspot"></div></div><div class="modal-footer" style="height: 8mm;margin-top: -31px;margin-right: -18px;"><button type="button" class="btn btn-outline-primary" id="cancelhotspot" data-bs-dismiss="modala">Cancel</button><button type="submit" class="btn btn-primary" id="hotspot">Save</button></div></form></div></div></div>');
+    $('.imagerow').append('<div id="draggable" class="ui-widget-content modala"style="top: 61mm;left: 71mm;position: absolute;bottom: 0;z-index: 2;cursor: pointer;"><div id="dragdrop" class="ui-widget-content "style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);"><i class="fas fa-circle"style="color: #0084FF;"></i></div><div class="hover"></div><div class="fiststep" style="background: white;width: 268px;height: 46px;margin-left: 80px;margin-top: 4px;border-radius: .25rem;"><span style="font-weight: 700; margin-left: 29px;color: #555766;position: relative;top: 10px;">Please reposition hotspot</span></div><div class="card secondstep " style="height: 47mm;"><div class="card-body"><span style="font-weight: 600;">Link to</span><div class="dragging-option" style="diplay:none"><p>Please reposition hotspot</p></div><form id="addhotspotpost" enctype="multipart/form-data" class="is-readonly"><div class="dragging"><select class="form-control" name="sceneId" id="imageselect"></select><br><div class="pichandyaw"></div><div class="submithotspot"></div></div><div class="modal-footer" style="height: 8mm;margin-top: -31px;margin-right: -18px;"><button type="button" class="btn btn-outline-primary" id="cancelhotspot" data-bs-dismiss="modala">Cancel</button><button type="submit" class="btn btn-primary" id="hotspot">Save</button></div></form></div></div></div>');
     $('.dragging-option').show();
     $('.dragging').hide();
     $('.secondstep').hide();
 
 
-    $(function() {
+    $(function(e) {
         
         $("#draggable").draggable({
             handle: ".fa-circle",
         });
-        
+
         var parant_id = $('input[name=imageid]').val();
         $("#imageselect").empty();
         var parant_id = $('input[name=imageid]').val();
-        var coords = v.mouseEventToCoords(event);
+        var coords = v.mouseEventToCoords(e);
         var pitch = 6;
         var yaw = -7;
         $(".pichandyaw").append('<input type="hidden" name="pitch" id="pitch" value="' + pitch + '"><input type="hidden" name="yaw" id="yaw" value="' + yaw + '"><input type="hidden" name="parant_id" id="parant_id" value="' + parant_id + '">');
         var itema=[];
+        let getimageroute = window.appRoutes.getImage;
+
         $.ajax({
             type: "get",
-            url: "getimage",
+            url: getimageroute,
             dataType: 'json',
             data: {
                 id: parant_id
@@ -74,7 +76,7 @@ $(document).on('click', '.addhotspot', function(e) {
                 
                 jQuery.each(response, function(index, item) {
                     itema.push(item);
-                   // $('#imageselect').append('<option value="' + item.id + '">' + item.image_title + '</option>');
+                //    $('#imageselect').append('<option value="' + item.id + '">' + item.image_title + '</option>');
                 });
             }
         });
@@ -100,11 +102,12 @@ $(document).on('click', '.addhotspot', function(e) {
         
                 var parant_id = $('input[name=imageid]').val();
                 var propid =$('#propid').val();
-		var decrtoken =$('#decrtoken').val();
-		var text=[];
+                var decrtoken =$('#decrtoken').val();
+                let getimageroute = window.appRoutes.getImage;
+                var text=[];
                 $.ajax({
                     type: "get",
-                    url: "getimage",
+                    url: getimageroute,
                     dataType: 'json',
                     data: {
                         id: parant_id,propid:propid,decrtoken:decrtoken
@@ -120,7 +123,7 @@ $(document).on('click', '.addhotspot', function(e) {
                                 var active=false;
                             }
                             
-                            text.push({text: item.image_title, value: item.id, selected: active, description: item.image_title, imageSrc: item.image},);
+                            text.push(item);
 
                             // $('#imageselect').append('<option value="' + item.id + '">' + item.image_title + '</option>');
                             

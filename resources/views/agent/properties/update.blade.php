@@ -17,7 +17,7 @@
 /* main styles */
 #draggable {
     border-radius: 0%;
-    background-image: url(assets/images/drop2.png);
+    background-image: url("/images/drop2.png");;
     width: 60px;
     height: 60px;
     background-size: 60px auto;
@@ -227,7 +227,7 @@
     background-position: 0px -60px;
 }
 .pnlm-sprite {
-    background-image: url(assets/images/drop2.png);
+    background-image: url("/images/drop2.png");;
     width: 60px;
     height: 60px;
     background-size: 60px auto;

@@ -22,7 +22,7 @@
                     <tr>
                         <td>
                             @if (isset($images_order))
-                                <div class="row ui-sortable rda" id="room" data-url="{{ route('Image.get') }}">
+                                <div class="row ui-sortable rda" id="room" data-url="{{ route('Image.get',['property' => $property]) }}">
                                     <input type="hidden" name="token" value="{{ $token }}" id="token">
                                     <input type="hidden" name="property_id" value="{{ $property->id }}" id="property_id">
                                     <input type="hidden" name="decrtoken" value="{{ $decrtoken }}" id="decrtoken">
@@ -147,37 +147,51 @@
         var imageUrl = "{{ asset('assets/1/images/477268420.jpg') }}";
 
 
-       var v;
-var activescene;
+        var v;
+        var activescene;
 
-window.addEventListener('load', bodyLoad);
+        window.addEventListener('load', bodyLoad);
+        console.log({!! $default !!});
+        console.log({!! $json !!});
 
-async function bodyLoad() {
-    v = pannellum.viewer('panorama', {
-        "useWebGL2": true,
-        "default": {!! $default !!},
-        "scenes": {!! $json !!},
-    });
+        async function bodyLoad() {
+            v = pannellum.viewer('panorama', {
+                "useWebGL2": true,
+                "default": {!! $default !!},
+                "scenes": {!! $json !!},
+            });
 
-    activescene = v.getScene();
+            activescene = v.getScene();
 
-}
+        }
 
-// Anywhere else, check if v is initialized first
-function doSomething() {
-    if (v) {
-        console.log(v.getScene());
-    }
-}
+        // Anywhere else, check if v is initialized first
+        function doSomething() {
+            if (v) {
+                console.log(v.getScene());
+            }
+        }
+        $(document).on('click', '.rda .rooms-types', async function () {
+            $('.rda .rooms-types').removeClass('active');
+            await $(this).addClass('active');
+        });
     </script>
+    
 @endpush
 
 <script>
     window.appRoutes = {
-        imageGet: "{{ route('Image.get') }}",
+        imageGet: "{{ route('Image.get', ['property' => $property]) }}",
         imageupload: "{{ route('property.update', ['property' => $property->id]) }}",
+        getImage: "{{ route('getimage', ['property' => $property]) }}",
+        droproute: "{{ route('dropzone.upload') }}",
+        getaudioroute: "{{ route('getaudio.post') }}",
     };
 </script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="{{asset('assets/js/libpannellum.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/js/pannellum.js')}}"></script>
 <script src="{{ asset('assets/js/imagesevent.js') }}"></script>
+<script src="{{asset('assets/js/hotspot.js')}}"></script>
+<script src="{{asset('assets/js/sortable.js')}}"></script>
+<script src="{{ asset('assets/js/getallimage.js') }}"></script>

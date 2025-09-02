@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Agent;
 
 use App\Http\Controllers\Controller;
+use App\Models\Audio;
+use App\Models\Property;
 use App\Models\PropertyImage;
 use App\Models\Publish;
+use App\Models\VoiceRecord;
 use App\Services\ImageService;
 use App\Services\PropertyImageService;
 use App\Services\PropertyService;
@@ -62,8 +65,13 @@ class AgentPropertyController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $property = Property::find($id);
+        return view('agent.properties.model.detail',[
+        'property' => $property
+    ]);
     }
+
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -74,26 +82,14 @@ class AgentPropertyController extends Controller
 
         $getfirstimage = PropertyImage::orderBy('order_id')->where('property_id', 1)->where('user_id', 3)->first();
         $default = [
-            "firstScene" =>  $getfirstimage->id ?? 1,
+            "firstScene" => (string) ($getFirstImage->id ?? $property->images->first()->id ?? '1'),
             "autoLoad" => true,
             "orientationOnByDefault" => true,
             "showControls" => false,
-            "autoRotate" =>  0,
+            "autoRotate" => 0,
             "compass" => false,
-
-
         ];
-        $scenes = [];
-        foreach ($property->images as $image) {
-            $scenes[$image->id] = [];
-            $scenes[$image->id]['title'] =  $image->image_title . '<input type="hidden" id="imageid" name="imageid" value="' . $image->id . '">';
-            $scenes[$image->id]['panorama'] =  $image->image;
-            $scenes[$image->id]['pitch'] = $image->pitch;
-            $scenes[$image->id]['yaw'] = $image->yaw;
-            $scenes[$image->id]['hfov'] = $image->hfov;
-            $scenes[$image->id]['hotSpots'] = $property->images;
-        }
-
+      
 
         $propety_details = [
             'Property_name' => $property->name ?? '',
@@ -117,24 +113,21 @@ class AgentPropertyController extends Controller
                 "audio_name"  => $image->audio_name,
             ];
         });
-        $json  = $property->images->mapWithKeys(function ($image, $property) {
+        $json = $property->images->mapWithKeys(function ($image) {
             return [
                 (string)$image->id => [
-                    "title"     => $image->image_title . "<input type='hidden' id='imageid' name='imageid' value='{$image->id}'>",
-                    "panorama"  => asset($image->image_path), // or Storage::url($image->image)
-                    "pitch"     => $image->pitch ?? 0,
-                    "yaw"       => $image->yaw ?? 0,
-                    "hfov"      => $image->hfov ?? 100,
-                    "hotSpots"  => [[
+                    "title" => $image->image_title . "<input type='hidden' id='imageid' name='imageid' value='{$image->id}'>",
+                    "panorama" => asset($image->image_path), // make sure image_path is correct
+                    "pitch" => $image->pitch ?? 0,
+                    "yaw" => $image->yaw ?? 0,
+                    "hfov" => $image->hfov ?? 100,
+                    "hotSpots" => [[
+                        "sceneId" => (string)$image->id,
+                        "type" => "scene",
+                        "pitch" => $image->pitch ?? 0,
+                        "yaw" => $image->yaw ?? 0,
+                        "hfov" => $image->hfov ?? 100,
                         "image_title" => $image->image_title,
-                        "id"          => $image->id,
-                        "pitch"       => $image->pitch,
-                        "yaw"         => $image->yaw,
-                        "hfov"        => $image->hfov,
-                        "scenename"   => $image->name,
-                        "parant_id"   => $image->parant_id,
-                        "sceneId"     => $image->id,
-                        "type"        => "scene",
                     ]]
                 ]
             ];
@@ -177,5 +170,46 @@ class AgentPropertyController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+
+     public function ajaxRequestPost(Property $property,Request $request)
+    {
+
+        $currentId = $request->get('id'); // current image id
+
+        $dropdownImages = PropertyImage::where('property_id', $property->id)
+            ->where('user_id', auth()->id())
+            ->where('id', '!=', $currentId) // exclude current image
+            ->orderBy('order_id')
+            ->get()
+            ->map(function ($image) use ($currentId) {
+                return [
+                    'text'        => $image->image_title,
+                    'value'       => $image->id,
+                    'selected'    => $image->id == $currentId ? "true" : "false", // mark active image
+                    'description' => $image->image_title,
+                    'imageSrc'    => asset($image->image_path), // full URL
+                ];
+            });
+
+        return response()->json($dropdownImages);
+    }
+
+
+    function udateorder(Request $request)
+    {
+        $orders = $request->all();
+        foreach($orders['dataId'] as $key => $o){
+                PropertyImage::where('id',$o)->update(["order_id" => $key+1]);
+        }
+     
+    }
+
+    public function getaudio(Request $request)
+    {
+        $currentsceneid = $request->currentsceneid;
+        $result = VoiceRecord::where('property_images_id', $currentsceneid)->get();
+        return response()->json($result);
     }
 }

@@ -100,8 +100,9 @@ function initDataTable(
     ]
 ) {
     let url = table.attr("data-url");
-    console.log(url);
-
+    // console.log(url);
+    // console.log($.fn.dataTable);
+    
     // Custom filtering function which will search data in column four between two values
     $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
         var min = minDate.val();
@@ -118,6 +119,7 @@ function initDataTable(
         }
         return false;
     });
+
     return new Promise(function (resolve, reject) {
         let isResponsive = url === "http://127.0.0.1:8000/post-log-list";
         let t = table.DataTable({
@@ -125,6 +127,7 @@ function initDataTable(
             serverSide: true,
             retrieve: true,
             columnDefs: columnDefs,
+
 
             ajax: {
                 url: url,

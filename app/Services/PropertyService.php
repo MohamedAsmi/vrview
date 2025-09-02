@@ -27,8 +27,9 @@ class PropertyService
                         : 'Inactive';
                 })
                 ->addColumn('actions', function ($user) {
-                    return view('admin.partials.actions', [
-                        'editRoute'   => route('users.edit', $user->id),
+                    return view('agent.partials.actions', [
+                        'editRoute'   => route('property.show', $user->id),
+                        'editRouteImage'   => route('property.edit', $user->id),
                         'showRoute'   => route('users.show', $user->id),
                         'deleteRoute' => route('users.destroy', $user->id),
                     ])->render();

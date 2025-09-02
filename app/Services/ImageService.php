@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Models\PropertyImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\ImageManager;
@@ -15,51 +14,39 @@ class ImageService
 {
     public static function store(Request $request, string $fieldName = 'images', string $folder = 'uploads')
     {
-        try {
-            if (!$request->hasFile('files')) {
-                return response()->json(['error' => 'No files uploaded'], 400);
-            }
-
-            $images = $request->file('files');
-            $savedPaths = [];
-
-            $orderid_select = PropertyImage::select('order_id')
-                ->where('property_id', $request->property_id)
-                ->orderBy('order_id', 'desc')
-                ->first();
-            
-            $orderid = $orderid_select ? $orderid_select->order_id : 0;
-
-            foreach ($images as $item) {
+        $images = $request->file('files');
+        $orderid_select = PropertyImage::select('order_id')->where('property_id', $request->propety_id)->orderBy('order_id', 'desc')->first();
+        if ($orderid_select != NULL) {
+            $orderid = $orderid_select->order_id;
+        } else {
+            $orderid = 0;
+        }
+        if ($request->hasFile('files')) {
+            if (count($images) > 0) {
+                foreach ($images as $item) {
 
 
                     $fileArray = array('image' => $item);
                     $rules = array(
-                        'image' => 'mimes:jpeg,jpg,png,gif|required'
+                        'image' => 'mimes:jpeg,jpg,png,gif|required' // max 10000kb
                     );
-                    
                     $validator = Validator::make($fileArray, $rules);
                     if ($validator->fails()) {
-                        continue; // Skip invalid files
-                    }
-
-                    try {
+                        return response()->json(['error' => $validator->errors()->getMessages()]);
+                    } else {
                         $orderid++;
                         $new_name = rand() . '.' . $item->getClientOriginalExtension();
                         $save_path = 'assets/' . $request->property_id . '/images/' . $new_name;
+                        // Initialize ImageManager with GD driver
 
-                        // Ensure the directory exists
-                        $directory = public_path('assets/' . $request->property_id . '/images/');
-                        if (!file_exists($directory)) {
-                            mkdir($directory, 0755, true);
-                        }
-
-                        // Initialize ImageManager
+                        $new_name = rand() . '.' . $item->getClientOriginalExtension();
+                        $values = array('image_title' => 'Room'. $orderid, 'image_path' => 'assets/'.$request->property_id.'/images/'. $new_name, 'pitch' => 0,'yaw' => 0,'property_id' => $request->property_id, 'user_id' => Auth::user()->id,'order_id' => $orderid);
+                        $image = PropertyImage::insert($values);
                         $manager = new ImageManager(
                             driver: new Driver()
                         );
 
-                        // Process the image
+                        // Open the uploaded image once
                         $image = $manager->read($item);
 
                         // Resize if height exceeds max
@@ -71,42 +58,18 @@ class ImageService
                             );
                         }
 
-                        // Save the processed image
+                        // Ensure the directory exists
+                        $directory = public_path('assets/' . $request->property_id . '/images/');
+                        if (!file_exists($directory)) {
+                            mkdir($directory, 0755, true);
+                        }
+
+                        // Save the image
                         $image->save(public_path($save_path));
-
-                        // Store in database
-                        $values = array(
-                            'image_title' => 'Room' . $orderid,
-                            'image_path' => $save_path,
-                            'pitch' => 0,
-                            'yaw' => 0,
-                            'property_id' => $request->property_id,
-                            'user_id' => Auth::user()->id,
-                            'order_id' => $orderid
-                        );
-                        
-                        PropertyImage::insert($values);
-
-                        // Add to saved paths
-                        $savedPaths[] = $save_path;
-
-                        // Clear memory
-                        unset($image);
-                        unset($manager);
-                        gc_collect_cycles();
-
-                    } catch (\Exception $e) {
-                        Log::error('Error processing image: ' . $e->getMessage());
-                        continue; // Skip this image and continue with others
+                        return $image;
                     }
+                }
             }
-
-            return $savedPaths;
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Failed to process images: ' . $e->getMessage()
-            ], 500);
         }
     }
 }

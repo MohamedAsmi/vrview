@@ -8,7 +8,7 @@
 /* main styles */
 #draggable {
     border-radius: 0%;
-    background-image: url(assets/images/drop2.png);
+    background-image: url("/images/drop2.png");;
     width: 60px;
     height: 60px;
     background-size: 60px auto;
@@ -218,7 +218,7 @@
     background-position: 0px -60px;
 }
 .pnlm-sprite {
-    background-image: url(assets/images/drop2.png);
+    background-image: url("/images/drop2.png");;
     width: 60px;
     height: 60px;
     background-size: 60px auto;
@@ -306,7 +306,7 @@ div.pnlm-tooltip:hover span {
     border: 1px dashed gray;
     margin-top: 4mm;
     cursor: pointer;
-    padding: 37px;
+    /* padding: 37px; */
 }
 .rooms-types-uplo:hover,.rooms-types-uplo.hover{
     background-color: white;
@@ -347,4 +347,208 @@ div.pnlm-tooltip:hover span {
 .ui-sortable-handl{
     margin-bottom: 22px !important;
     font-size: 20px !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.card {
+    width: 80mm;
+    margin-left: 81px;
+    margin-top: 0px;
+}
+.hover {
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    border-left: 16px solid transparent;
+    border-right: 13px solid transparent;
+    border-bottom: 18px solid white;
+    margin-top: 17px;
+    margin-left: 59px;
+    transform: rotate(-92deg);
+}
+.time {
+    font-size: 47px;
+    position: absolute;
+    left: 36mm;
+    top: 4mm;
+    font-weight: 900;
+    color: gray;
+
+}
+
+.recordbutton {
+    background-color: red;
+    border: none;
+    padding: -1px;
+    font-size: 41px;
+    height: 20mm;
+    width: 20mm;
+}
+
+.button5 {
+    border-radius: 50%;
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+#list {
+    width: 100%;
+    text-align: left;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+#list .thumb {
+    height: 75px;
+    margin: 11px 5px 0 0;
+    padding-bottom: 5px;
+}
+.rooms-types-uplo {
+    font-size: 12px;
+}
+
+
+.card {
+    width: 80mm;
+    margin-left: 81px;
+    margin-top: 0px;
+}
+.hover {
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    border-left: 16px solid transparent;
+    border-right: 13px solid transparent;
+    border-bottom: 18px solid white;
+    margin-top: 17px;
+    margin-left: 59px;
+    transform: rotate(-92deg);
+}
+
+form.is-readonly .btn-save {
+    display: none;
+}
+form.is-readonly input[disabled],
+form.is-readonly textarea[disabled] {
+    cursor: text;
+    background-color: #fff;
+    border-color: transparent;
+    outline-color: transparent;
+    box-shadow: none;
+}
+form.is-editing .btn-edit {
+    display: none;
+}
+#exampleInputPassword1 {
+    background: none;
+    border: none;
+    width: 39mm;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.js-edit {
+    margin-top: -32px;
+    margin-left: 144px;
+}
+.js-save {
+    margin-top: -32px;
+    margin-left: 144px;
+}
+.audio_player {
+    position: absolute;
+    top: -19mm;
+    background-color: white;
+    height: 4mm;
+    width: 6mm;
+    margin: 0;
+    padding: 7px;
+    right: 6mm;
+}
+.tes {
+    color: red;
+}
+.recplay{
+    margin-left: 10px;
+}
+.rooms-types-uplo{
+    background-color: white;
+    border:1px dashed gray;
+    margin-top: 4mm;
+    cursor: pointer;
+}
+.rooms-types-uplo:hover,.rooms-types-uplo.hover{
+    background-color: white;
+    border:1px dashed gray;
+    margin-top: 4mm;
+    transition: border-width 0.5s linear;
+  
+}
+#plusicon{
+    font-size: 15mm;
+    color: #E4E3E3;
+    margin-top: 28px;
+}
+p{
+    margin: auto;
+    width: 100%;
+    padding: 10px;
+    color: #0084FF;
+    font-size: 4mm;
+    font-weight: 700;
+}
+
+
+.fa-times{
+    color:#0681E1;
+}
+.audioicon{
+    color: white
+}
+
+
+#pauseaudio{
+	animation-name: pulse;
+	animation-duration: 1.5s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+@keyframes pulse{
+	0%{
+		box-shadow: 0px 0px 5px 0px rgba(173,0,0,.3);
+	}
+	65%{
+		box-shadow: 0px 0px 5px 13px rgba(173,0,0,.3);
+	}
+	90%{
+		box-shadow: 0px 0px 5px 13px rgba(173,0,0,0);
+	}
+}
+
+.rooms-types-uplox{
+    background-color: #ededed;
+    margin-top: 4mm;
+}
+.pnlm-hotspot-base{
+  display: none;
 }
