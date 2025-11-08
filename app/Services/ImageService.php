@@ -12,64 +12,72 @@ use Intervention\Image\Drivers\Gd\Driver;
 
 class ImageService
 {
-    public static function store(Request $request, string $fieldName = 'images', string $folder = 'uploads')
+    public function store(Request $request, string $fieldName = 'files', string $folder = 'uploads')
     {
-        $images = $request->file('files');
-        $orderid_select = PropertyImage::select('order_id')->where('property_id', $request->propety_id)->orderBy('order_id', 'desc')->first();
-        if ($orderid_select != NULL) {
-            $orderid = $orderid_select->order_id;
-        } else {
-            $orderid = 0;
+        $images = $request->file($fieldName);
+
+        if (!$images || !is_array($images)) {
+            return [];
         }
-        if ($request->hasFile('files')) {
-            if (count($images) > 0) {
-                foreach ($images as $item) {
 
+        // Get last order_id for this property
+        $lastOrder = PropertyImage::where('property_id', $request->property_id)
+            ->orderByDesc('order_id')
+            ->value('order_id') ?? 0;
 
-                    $fileArray = array('image' => $item);
-                    $rules = array(
-                        'image' => 'mimes:jpeg,jpg,png,gif|required' // max 10000kb
-                    );
-                    $validator = Validator::make($fileArray, $rules);
-                    if ($validator->fails()) {
-                        return response()->json(['error' => $validator->errors()->getMessages()]);
-                    } else {
-                        $orderid++;
-                        $new_name = rand() . '.' . $item->getClientOriginalExtension();
-                        $save_path = 'assets/' . $request->property_id . '/images/' . $new_name;
-                        // Initialize ImageManager with GD driver
+        $storedImages = [];
+        $orderId = $lastOrder;
 
-                        $new_name = rand() . '.' . $item->getClientOriginalExtension();
-                        $values = array('image_title' => 'Room'. $orderid, 'image_path' => 'assets/'.$request->property_id.'/images/'. $new_name, 'pitch' => 0,'yaw' => 0,'property_id' => $request->property_id, 'user_id' => Auth::user()->id,'order_id' => $orderid);
-                        $image = PropertyImage::insert($values);
-                        $manager = new ImageManager(
-                            driver: new Driver()
-                        );
+        foreach ($images as $item) {
+            // Validate each image
+            $validator = Validator::make(
+                ['image' => $item],
+                ['image' => 'mimes:jpeg,jpg,png,gif|required|max:10000']
+            );
 
-                        // Open the uploaded image once
-                        $image = $manager->read($item);
-
-                        // Resize if height exceeds max
-                        $max_height = 2600;
-                        if ($image->height() > $max_height) {
-                            $image->resize(
-                                intval($image->width() * $max_height / $image->height()),
-                                $max_height
-                            );
-                        }
-
-                        // Ensure the directory exists
-                        $directory = public_path('assets/' . $request->property_id . '/images/');
-                        if (!file_exists($directory)) {
-                            mkdir($directory, 0755, true);
-                        }
-
-                        // Save the image
-                        $image->save(public_path($save_path));
-                        return $image;
-                    }
-                }
+            if ($validator->fails()) {
+                throw new \Exception(json_encode($validator->errors()->getMessages()));
             }
+
+            $orderId++;
+            $newName = uniqid() . '.' . $item->getClientOriginalExtension();
+            $savePath = "assets/{$request->property_id}/images/{$newName}";
+
+            // Save DB record
+            $values = [
+                'image_title' => 'Room' . $orderId,
+                'image_path'  => $savePath,
+                'pitch'       => 0,
+                'yaw'         => 0,
+                'property_id' => $request->property_id,
+                'user_id'     => auth()->user()->id,
+                'order_id'    => $orderId
+            ];
+
+            $propertyImage = PropertyImage::create($values);
+
+            // Process & save the image
+            $manager = new ImageManager(new Driver());
+            $image   = $manager->read($item);
+
+            $maxHeight = 2600;
+            if ($image->height() > $maxHeight) {
+                $image->resize(
+                    intval($image->width() * $maxHeight / $image->height()),
+                    $maxHeight
+                );
+            }
+
+            $directory = public_path("assets/{$request->property_id}/images/");
+            if (!file_exists($directory)) {
+                mkdir($directory, 0755, true);
+            }
+
+            $image->save(public_path($savePath));
+
+            $storedImages[] = $propertyImage;
         }
+
+        return $storedImages;
     }
 }

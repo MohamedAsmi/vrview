@@ -8,6 +8,7 @@
       
             <div class="modal-body">
                 <div id="message-area"></div>
+                <input type="text" class="form-control" name="user_id" id="user_id" value="{{ auth()->user()->id }}" hidden>
              
                 <div class="form-group row">
                     <div class="col">

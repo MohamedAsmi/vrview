@@ -104,12 +104,8 @@
                             <label for="type" class="col-md-4 col-form-label text-md-end">{{ __('Type') }}</label>
                             <div class="col-md-6">
                                 <select name="type" id="type" class="form-control">
-                                    <option value="0">User</option>
-                                    <option value="1">Agent</option>
-                                    
+                                    <option value="3">Admin</option>
                                 </select>
-
-
                             </div>
                         </div>
                         <div class="row mb-3">

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\AdminRegisterController;
 use App\Http\Controllers\Agent\AgentHomeController;
 use App\Http\Controllers\Agent\AgentPropertyController;
 use App\Http\Controllers\Agent\AgentPropertyImageController;
@@ -28,7 +29,11 @@ Route::post('getallImage', [AgentPropertyController::class, 'getallImage'])->nam
 Route::get('getimage/{property}',[AgentPropertyController::class, 'ajaxRequestPost'])->name('getimage');
 Route::post('dropzone/upload', [AgentPropertyController::class, 'udateorder'])->name('dropzone.upload');
 Route::post('getaudio', [AgentPropertyController::class, 'getaudio'])->name('getaudio.post');
+Route::post('insert-hotspot', [AgentPropertyController::class, 'insertRequestPost'])->name('hotspot.insert');
+Route::post('deletehotspot', [AgentPropertyController::class, 'deletehotspot'])->name('hotspot.delete');
 
+
+Route::get('admin/register',[AdminRegisterController::class, 'index'])->name('admin.register');
 
 
 Auth::routes(['verify' => true]);
@@ -50,6 +55,12 @@ Route::prefix('agent')->middleware(['auth', 'is-agent'])->group(function () {
     Route::post('store/property/{property}', [AgentPropertyController::class, 'update'])->name('property.update');
     // Route::resource('property-image/{property}', AgentPropertyImageController::class);
     Route::get('list/property', [AgentPropertyController::class, 'list'])->name('list.properties');
+    Route::get('property/list', [AgentPropertyController::class, 'getPropertiesList'])->name('property.list');
+    Route::post('voice/record', [AgentPropertyController::class, 'storeVoiceRecord'])->name('voice.record.store');
+    Route::delete('voice/record', [AgentPropertyController::class, 'deleteVoiceRecord'])->name('voice.record.delete');
+    Route::get('voice/play/{id}', [AgentPropertyController::class, 'playVoiceRecord'])->name('voice.record.play');
+    Route::get('edit/property/name/{id}', [AgentPropertyController::class, 'editPropertyName'])->name('edit.property.name');
+    Route::post('save/property/name/{id}', [AgentPropertyController::class, 'savePropertyName'])->name('edit.property.save');
     
 
 

@@ -347,11 +347,7 @@ div.pnlm-tooltip:hover span {
                                             <input type="text" class="form-control is-disabled" name="imagetitle" id="exampleInputPassword1" placeholder="Name" value='{{$image->image_title}}'>
                                         </div>
                                         <input type="hidden" id="imageId" name="imagetitleid" placeholder="Email" value='{{$image->id}}' disabled>
-                                        <div class="float-right" style="margin-top: -24px;padding-right: 5px;">
-                                        @if($image->audio_name)
-                                            <span id="musicicon" class="far fa-volume"></span>
-                                        @endif
-                                        </div>
+                                       
                                     </form>
                             </div>
                         </div>

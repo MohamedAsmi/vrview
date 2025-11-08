@@ -7,12 +7,13 @@ $(document).on('submit', '#addhotspotpost', function(e) {
     var formData = new FormData(this);
     var scenename = ddData.selectedData.text;
     console.log(scenename);
+    let route = window.appRoutes.inserthotsportroute;
 
     formData.append('scenename', scenename);
     formData.append('sceneId', sceneId);
     $.ajax({
         type: 'POST',
-        url: "Inserthotspot",
+        url: route,
         data: formData,
         dataType: 'json',
         contentType: false,
@@ -20,7 +21,8 @@ $(document).on('submit', '#addhotspotpost', function(e) {
         processData: false,
 
         success: function(response) {
-            window.location = "vrview?token="+access_token+"&sceneid="+currentsceneid;
+            // console.log(response);
+            window.location = "edit?"+"&="+response.SceneId+currentsceneid;
             $('.addhotspot').prop("disabled",false);
         }
     });
@@ -169,17 +171,18 @@ var foo = async () => {
 
     var currentsceneid = v.getScene();
     var access_token =$('#token').val();
+    let deleteimageroute = window.appRoutes.deletehotsportroute;
+
+    
     var users = await $.ajax({
-        url: "deletehotspot",
+        url: deleteimageroute,
         type: "POST",
         dataType: 'json',
         data: {
             SceneId: currentsceneid,
         },
         success: function(response) {
-
-            window.location = "vrview?token="+access_token+"&sceneid="+currentsceneid;
-        
+            window.location.reload();
         },
     });
 

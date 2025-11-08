@@ -15,7 +15,7 @@
     });
   
 </script>
-  <script src="{{asset('themes/js/bootstrap.bundle.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 
 {{-- <script src="{{asset('assets/vendors/scripts/core.js')}}"></script>
@@ -27,4 +27,4 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js'></script>
     {{-- <script  src="{{asset('assets/js/coursal_script.js')}}"></script> --}}
     <script  src="{{asset('assets/js/select.js')}}"></script>
-    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js" defer></script>

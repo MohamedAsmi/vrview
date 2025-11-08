@@ -11,6 +11,7 @@ class PropertyImage extends Model
     protected $fillable = [
         'property_id',
         'image_path',
+        'user_id',
         'image_title',
         'pitch',
         'yaw',
@@ -18,4 +19,9 @@ class PropertyImage extends Model
         'order_id', 
         'status',
     ];
+
+    public function hostpot()
+    {
+        return $this->hasMany(Hotspot::class, 'property_image_id');
+    }
 }

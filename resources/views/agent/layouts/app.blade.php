@@ -21,6 +21,7 @@
 		</div>
 	</div>
 	<!-- js -->
+	
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pannellum/build/pannellum.css"/>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum/build/pannellum.js"></script>
 

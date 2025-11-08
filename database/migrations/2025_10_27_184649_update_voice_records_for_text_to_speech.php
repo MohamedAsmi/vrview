@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('audio', function (Blueprint $table) {
-            $table->id();
-            $table->string('path')->nullable();
-            $table->foreignId('property_image_id')->constrained('property_images')->onDelete('cascade');
-            $table->timestamps();
+        Schema::table('voice_records', function (Blueprint $table) {
+            //
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('audio');
+        Schema::table('voice_records', function (Blueprint $table) {
+            //
+        });
     }
 };

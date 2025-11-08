@@ -15,7 +15,7 @@ class PropertyRepository implements PropertRepositoryInterface
      */
     public function getAll(): Collection
     {
-        return Property::all();
+        return Property::where('user_id',auth()->user()->id)->get();
     }
 
     public function create(array $data): Property

@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Repositories\PropertyImageRepository;
 use App\Repositories\PropertyRepository;
 use App\Traits\Response;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -37,22 +38,23 @@ class PropertyImageService
     //     }
     // }
 
-    public function storePropertyImage($request)
+   
+    public function storePropertyImage(Request $request)
     {
         try {
-            $image_paths = $this->imageService->store($request,'files','uploads');
-            // foreach ($image_paths as $image_path) {
-            //     $data = $request->all();
-            //     $data['image_path'] = $image_path;
-            //     $property = $this->propertyImageRepository->store($data);
-            // }
-         
-            return $image_paths;
+            $storedImages = $this->imageService->store($request, 'files', 'uploads');
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Images uploaded successfully',
+                'data'    => $storedImages
+            ]);
         } catch (\Exception $e) {
-            Log::error('Error storing property: ' . $e->getMessage());
+            Log::error('Error storing property image: ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 500);
         }
-    }   
+    }
+       
 
     public function getPropertyById(int $id)
     {

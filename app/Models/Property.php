@@ -10,6 +10,7 @@ class Property extends Model
     use HasFactory;
     protected $fillable = [
         'name',
+        'user_id',
         'price',
         'address',
         'address2',
@@ -21,5 +22,10 @@ class Property extends Model
     public function images()
     {
         return $this->hasMany(PropertyImage::class, 'property_id')->orderBy('order_id');;
+    }
+
+    public function voiceRecords()
+    {
+        return $this->hasMany(VoiceRecord::class, 'property_id');
     }
 }

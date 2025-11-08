@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('hotspots', function (Blueprint $table) {
             $table->id();
+            $table->double('pitch')->nullable();
+            $table->double('yaw')->nullable();
+            $table->double('hfov')->nullable();
+            $table->string('scenename')->nullable();
+            $table->foreignId('property_image_id')->constrained('property_images')->onDelete('cascade');
+            $table->bigInteger('scene_id');
+            $table->string('type')->nullable();
             $table->timestamps();
         });
     }
