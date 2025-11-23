@@ -38,7 +38,7 @@
             </div>
         </div>
         
-        <table id="data_table" class="table" data-url="{{route('list.properties')}}">
+        <table id="data_table" class="table" data-url="{{route('list.properties')}}" reload="true">
             <thead>
                 <tr>
                     <th>ID</th>

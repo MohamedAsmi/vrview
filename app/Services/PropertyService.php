@@ -30,8 +30,8 @@ class PropertyService
                     return view('agent.partials.actions', [
                         'editRoute'   => route('property.show', $user->id),
                         'editRouteImage'   => route('property.edit', $user->id),
-                        'showRoute'   => route('users.show', $user->id),
-                        'deleteRoute' => route('users.destroy', $user->id),
+                        'showRoute'   => route('property.show', $user->id),
+                        'deleteRoute' => route('property.destroy', $user->id),
                     ])->render();
                 })
                 ->rawColumns(['actions'])

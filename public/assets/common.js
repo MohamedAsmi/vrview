@@ -30,7 +30,7 @@ $(document).on("submit", "#ajax-form", async function (e) {
         let formModal = $(this).closest(".modal");
 
         if (formModal.length != 0) {
-            $("button[data-dismiss=modal]").click();
+            $("button[data-bs-dismiss=modal]").click();
         }
         console.log(response);
         let message = showMsg(response.message, "", response.result);
@@ -79,11 +79,11 @@ $(document).on("click", ".load-modal", function () {
 
 $(document).on('shown.bs.modal', '.modal', function () {
     let $this = $(this);
-    $(this).find('.select2').select2({
-        dropdownParent: $this,
-        theme: "classic",
+    // $(this).find('.select2').select2({
+    //     dropdownParent: $this,
+    //     theme: "classic",
 
-    });
+    // });
 });
 
 function initDataTable(

@@ -171,7 +171,19 @@ class AgentPropertyController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $property = Property::find($id);
+        if (!$property) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Property not found.'
+            ], 404);
+        }
+
+        $property->delete();
+        return response()->json([
+            'success' => true,
+            'message' => 'Property and associated images deleted successfully.'
+        ]);
     }
 
 
@@ -400,12 +412,7 @@ class AgentPropertyController extends Controller
 
             // Remove audio indicator from property image
             $propertyImage = PropertyImage::find($voiceRecord->property_images_id);
-            if ($propertyImage) {
-                $propertyImage->audio_name = null;
-                $propertyImage->save();
-            }
-
-            // Delete the actual file
+    
             $filePath = storage_path('app/public/' . $voiceRecord->file_path);
             if (file_exists($filePath)) {
                 unlink($filePath);

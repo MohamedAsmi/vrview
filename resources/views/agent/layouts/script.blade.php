@@ -28,3 +28,4 @@
     {{-- <script  src="{{asset('assets/js/coursal_script.js')}}"></script> --}}
     <script  src="{{asset('assets/js/select.js')}}"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>

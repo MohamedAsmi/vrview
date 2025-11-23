@@ -164,12 +164,8 @@
                     <tr>
                         <td>
                             @if (isset($images_order))
-                                <button class="btn btn-danger" id="start" style="display: none;">
-                                    <i class="fas fa-microphone"></i>
-
-                                    Record
-                                </button>
-                                <button class="btn btn-primary" id="pButton" style="display: none;">
+                               
+                                {{-- <button class="btn btn-primary" id="pButton" style="display: none;">
                                     <i class="far fa-play" id="picon"></i>
                                     <div class="music" style="display:none"></div>
                                     Play audio
@@ -177,15 +173,13 @@
                                 <button class="btn btn-outline-primary" id="pButtondelete" style="display: none;">
                                     <i class="far fa-times" aria-hidden="true"></i>
                                     Delete audio
-                                </button>
+                                </button> --}}
 
                                 <div class="float-left" id="voiceControlsContainer">
-                                    <!-- Record button - shown when no voice recording exists -->
                                     <button class="btn btn-success" id="recordVoiceBtn" onclick="testClick()" data-toggle="modal" data-target="#voiceRecordModal" style="display: none;">
                                         <i class="fas fa-microphone"></i> Record Voice
                                     </button>
                                     
-                                    <!-- Play/Pause buttons - shown when voice recording exists -->
                                     <button class="btn btn-primary" id="playVoiceBtn" style="display: none;">
                                         <i class="far fa-play" id="playIcon"></i> Play Voice
                                     </button>
@@ -241,7 +235,6 @@
         </div>
     </div>
 
-    <!-- Voice Recording Modal -->
     <div class="modal fade voice-record-modal" id="voiceRecordModal" tabindex="-1" role="dialog" aria-labelledby="voiceRecordModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -254,9 +247,9 @@
                 <div class="modal-body">
                     <form id="voiceRecordForm" enctype="multipart/form-data">
                         @csrf
-                        <div class="form-group">
+                        <div class="form-group" hidden >
                             <label>Choose Recording Method:</label>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" >
                                 <label class="btn btn-outline-primary active">
                                     <input type="radio" name="recordMethod" id="recordMic" value="microphone" checked> 
                                     <i class="fas fa-microphone"></i> Record with Microphone
