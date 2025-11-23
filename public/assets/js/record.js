@@ -53,7 +53,7 @@
 
     let playButton = document.getElementById("playButton");
     let pauseButton = document.getElementById("pauseButton");
-    let resetButton = document.getElementById("resetButton");
+    // let resetButton = document.getElementById("resetButton");
     let clipName = null;
     let record = document.getElementById('start');
     let stop = document.getElementById('stop');

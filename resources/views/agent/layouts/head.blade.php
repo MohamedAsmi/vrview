@@ -18,10 +18,16 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 	{{-- <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'> --}}
 	{{-- <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css'> --}}
-	<script src="https://kit.fontawesome.com/c2af6e26fd.js" crossorigin="anonymous"></script>
+	{{-- <script src="https://kit.fontawesome.com/c2af6e26fd.js" crossorigin="anonymous"></script> --}}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
     <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet"/>
 	<link rel="stylesheet" href="{{ asset('assets/css/active.css') }}">
 	<link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<meta name="base_url" content="{{ url('/') }}">

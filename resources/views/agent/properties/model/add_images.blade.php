@@ -165,7 +165,7 @@
                         <td>
                             @if (isset($images_order))
                                 <button class="btn btn-danger" id="start" style="display: none;">
-                                    <i class="far fa-microphone"></i>
+                                    <i class="fas fa-microphone"></i>
 
                                     Record
                                 </button>
@@ -182,7 +182,7 @@
                                 <div class="float-left" id="voiceControlsContainer">
                                     <!-- Record button - shown when no voice recording exists -->
                                     <button class="btn btn-success" id="recordVoiceBtn" onclick="testClick()" data-toggle="modal" data-target="#voiceRecordModal" style="display: none;">
-                                        <i class="far fa-microphone"></i> Record Voice
+                                        <i class="fas fa-microphone"></i> Record Voice
                                     </button>
                                     
                                     <!-- Play/Pause buttons - shown when voice recording exists -->
@@ -247,7 +247,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="voiceRecordModalLabel">Record Voice for Property</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -259,7 +259,7 @@
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                 <label class="btn btn-outline-primary active">
                                     <input type="radio" name="recordMethod" id="recordMic" value="microphone" checked> 
-                                    <i class="far fa-microphone"></i> Record with Microphone
+                                    <i class="fas fa-microphone"></i> Record with Microphone
                                 </label>
                                 <label class="btn btn-outline-primary">
                                     <input type="radio" name="recordMethod" id="recordText" value="text"> 
@@ -274,7 +274,7 @@
                                 <label>Voice Recording:</label>
                                 <div class="recording-controls">
                                     <button type="button" class="btn btn-danger" id="startRecording">
-                                        <i class="far fa-microphone"></i> Start Recording
+                                        <i class="fas fa-microphone"></i> Start Recording
                                     </button>
                                     <button type="button" class="btn btn-warning" id="stopRecording" style="display: none;">
                                         <i class="far fa-stop"></i> Stop Recording
@@ -327,7 +327,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-primary" id="saveVoiceRecord" disabled>Save Recording</button>
                 </div>
             </div>
