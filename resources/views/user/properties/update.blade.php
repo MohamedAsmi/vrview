@@ -337,7 +337,7 @@ div.pnlm-tooltip:hover span {
                                 <div class="rooms-types card-sub <?php if(isset($_GET['sceneid'])){if($_GET['sceneid'] == $image->id){echo "active";}}else{if($key == 0){echo "active";}}?>" id="rooms-types" data-id='{{$image->id}}' name='{{$image->image_title}}'>
                                 <input type="hidden" name="imageOrder[]" value='{{$image->id}}'>
                                 <div class="rooms-type-close-btn btn-primary closeses">
-                                    <i class="fas fa-times closeicon"></i>
+                                    <i class="fa fa-close"></i>
                                 </div>
                                 <div class="image-element --- " data-id='{{$image->id}}' style="background-image: url('{{$image->image}}')">
                                 </div>

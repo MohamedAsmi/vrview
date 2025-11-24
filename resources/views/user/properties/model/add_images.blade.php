@@ -40,7 +40,7 @@
                                                 data-id='{{ $image->id }}' name='{{ $image->image_title }}'>
                                                 <input type="hidden" name="imageOrder[]" value='{{ $image->id }}'>
                                                 <div class="rooms-type-close-btn  closeses">
-                                                    <i class="fas fa-times closeicon"></i>
+                                                    <i class="fa fa-close "></i>
                                                 </div>
                                                 <div class="image-element --- " data-id='{{ $image->id }}'
                                                     style="background-image: url('{{ $image->image && asset('public/' . $image->image) ? asset($image->image) : asset('assets/noimage.png') }}')">

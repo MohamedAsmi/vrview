@@ -91,9 +91,9 @@
             <div class="col-md-5 rooms-container">
                 <table class="table table-bordered">
                     <tr>
-                        <th style="color: #555766;">Rooms
-                            <div class="float-right">
-                                <a href="{{ url('/preview?token=fsdfdf') }}" target="_blank"><button
+                                                   <a href="{{ url('/preview?token=fsdfdf') }}" target="_blank"><button
+ght">
+                                <a href="{{ url('/preview') }}" target="_blank"><button
                                         class="btn btn-outline-primary"><i class="fal fa-presentation"
                                             style="padding-right: 4px;"></i>Preview</button></a>
                                 <button class="btn btn-outline-primary" data-toggle="modal" data-target="#publish"><i
@@ -125,7 +125,7 @@
                                                 data-id='{{ $image->id }}' name='{{ $image->image_title }}'>
                                                 <input type="hidden" name="imageOrder[]" value='{{ $image->id }}'>
                                                 <div class="rooms-type-close-btn  closeses">
-                                                    <i class="fas fa-times closeicon"></i>
+                                                    <i class="fa fa-close "></i>
                                                 </div>
                                                 <div class="image-element --- " data-id='{{ $image->id }}'
                                                     style="background-image: url('{{ $image->image && asset('public/' . $image->image) ? asset($image->image) : asset('assets/noimage.png') }}')">
@@ -197,7 +197,7 @@
                                 </div>
                                 <div class="float-right">
                                     <button class="btn btn-outline-primary" id="clearhotspot"><i
-                                            class="far fa-times"></i>
+                                            class="fa fa-times"></i>
                                         Clear all
                                     </button>
                                     <button class="btn btn-primary addhotspot"><i class="far fa-plus"></i> Add hotspot

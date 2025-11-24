@@ -27,6 +27,7 @@
 
 	@include('agent.layouts.model')
 	@include('agent.layouts.script')
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 	@stack('js')
 </body>
